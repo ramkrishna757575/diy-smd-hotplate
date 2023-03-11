@@ -9,7 +9,7 @@
 #define THERMISTOR_BETA 3950       // The beta coefficient or the B value of the thermistor (usually 3000-4000) check the datasheet for the accurate value.
 #define VD_RESISTANCE 100000       // Value of  resistor used for the voltage divider
 
-class HotplateTemperatureSensor {
+class HotplateThermistor {
    private:
     int samples = 0;
 

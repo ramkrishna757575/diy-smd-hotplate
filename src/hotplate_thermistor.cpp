@@ -1,6 +1,6 @@
-#include "hotplate_temperature_sensor.h"
+#include "hotplate_thermistor.h"
 
-float HotplateTemperatureSensor::getTemperature() {
+float HotplateThermistor::getTemperature() {
     uint8_t i;
     float average;
     samples = 0;

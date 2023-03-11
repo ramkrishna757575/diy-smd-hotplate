@@ -5,10 +5,10 @@
 #include "hotplate_dial.h"
 #include "hotplate_display.h"
 #include "hotplate_ssr.h"
-#include "hotplate_temperature_sensor.h"
+#include "hotplate_thermistor.h"
 
 HotplateDisplay hotplateDisplay;
-HotplateTemperatureSensor hotplateTemperatureSensor;
+HotplateThermistor hotplateThermistor;
 HotplateBuzzer hotplateBuzzer;
 HotplateButton button1, button2, button3;
 HotplateSSR hotplateSSR;
@@ -44,7 +44,7 @@ void setup() {
 }
 
 void loop() {
-    float temperature = hotplateTemperatureSensor.getTemperature();
+    float temperature = hotplateThermistor.getTemperature();
     hotplateDisplay.setCursor(0, 0);
     hotplateDisplay.println("Temp: " + String(temperature) + " " + (char)247 + "C");
 
