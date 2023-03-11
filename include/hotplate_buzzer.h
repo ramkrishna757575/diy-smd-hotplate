@@ -27,4 +27,5 @@ class HotplateBuzzer {
     void confirmSelectionTone();
     void programStartTone();
     void programFinishTone();
+    void resetTone();
 };

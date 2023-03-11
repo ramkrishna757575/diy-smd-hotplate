@@ -38,3 +38,8 @@ void HotplateDisplay::println(String str, uint8_t size, bool clear) {
 void HotplateDisplay::updateDisplay() {
     display.display();
 }
+
+void HotplateDisplay::clearDisplay() {
+    display.setCursor(0, 0);
+    display.print("");
+}

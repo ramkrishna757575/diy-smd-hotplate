@@ -40,3 +40,8 @@ void HotplateBuzzer::programFinishTone() {
     TonePattern pattern[2] = {{TONE_3500, 200}, {TONE_3000, 200}};
     playTone(pattern, 2);
 }
+
+void HotplateBuzzer::resetTone() {
+    TonePattern pattern[5] = {{TONE_3000, 50}, {0, 50}, {TONE_3000, 50}, {0, 50}, {TONE_3000, 50}};
+    playTone(pattern, 5);
+}

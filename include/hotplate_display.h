@@ -19,7 +19,8 @@ class HotplateDisplay {
     HotplateDisplay();
     void init();
     void setCursor(uint16_t x, uint16_t y);
-    void print(String, uint8_t size = 1, bool clear = true);
-    void println(String, uint8_t size = 1, bool clear = true);
+    void print(String, uint8_t size = 1, bool clear = false);
+    void println(String, uint8_t size = 1, bool clear = false);
     void updateDisplay();
+    void clearDisplay();
 };

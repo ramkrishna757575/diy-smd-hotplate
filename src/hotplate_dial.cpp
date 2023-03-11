@@ -28,10 +28,10 @@ void HotplateDial::updateCount() {
         // If the DT state is different than the CLK state then
         // the encoder is rotating CCW so decrement
         if (digitalRead(DIAL_DT) != currentStateCLK) {
-            counter--;
+            counter = constrain(counter - 1, MIN_TEMPERATURE, MAX_TEMPERATURE);
         } else {
             // Encoder is rotating CW so increment
-            counter++;
+            counter = constrain(counter + 1, MIN_TEMPERATURE, MAX_TEMPERATURE);
         }
     }
 
@@ -44,7 +44,7 @@ uint8_t HotplateDial::getCount() {
 }
 
 void HotplateDial::setCount(uint8_t count) {
-    counter = count;
+    counter = constrain(count, MIN_TEMPERATURE, MAX_TEMPERATURE);
 }
 
 void HotplateDial::hotplateDialISR() {
