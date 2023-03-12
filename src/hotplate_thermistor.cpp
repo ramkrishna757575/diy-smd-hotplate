@@ -5,7 +5,6 @@ float HotplateThermistor::getTemperature() {
     float average;
     samples = 0;
 
-    // activate sensor voltage
     for (i = 0; i < SAMPLING_RATE; i++) {
         samples += analogRead(NTC_PIN);
         delay(10);

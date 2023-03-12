@@ -4,6 +4,7 @@
 #include "hotplate_buzzer.h"
 #include "hotplate_dial.h"
 #include "hotplate_display.h"
+#include "hotplate_reflow_profiles.h"
 #include "hotplate_ssr.h"
 #include "hotplate_thermistor.h"
 
@@ -15,7 +16,7 @@ HotplateSSR hotplateSSR;
 HotplateDial hotplateDial;
 
 bool isProgramModeSelected = false, isProgramOptionConfirmed = false, isProgramRunning = false;
-bool isReflowCurveMode = true, profile138 = true;
+bool isReflowCurveMode = true, profile138 = false;
 
 uint8_t targetTemp = MIN_TEMPERATURE;
 
@@ -42,6 +43,9 @@ void setup() {
 
     // Initialize Rotary encoder
     hotplateDial.init();
+
+    // Get reflow profiles
+    getProfiles();
 
     // small delay before app start
     delay(2000);
@@ -70,11 +74,7 @@ void loop() {
             if (isReflowCurveMode) {
                 hotplateDisplay.println("Reflow Curve Mode", 1, true);
                 hotplateDisplay.println("Select Profile:");
-                if (profile138) {
-                    hotplateDisplay.println(">> Profile 138", 1);
-                } else {
-                    hotplateDisplay.println(">> Profile 183", 1);
-                }
+                hotplateDisplay.println(">> " + profile[byte(profile138)].name, 1);
                 if (button1.isPressed()) {
                     profile138 = !profile138;
                     hotplateBuzzer.menuTone();
@@ -96,11 +96,7 @@ void loop() {
             hotplateDisplay.setCursor(0, 0);
             if (isReflowCurveMode) {
                 hotplateDisplay.println("Reflow Curve", 1, true);
-                if (profile138) {
-                    hotplateDisplay.println(String("138 ") + (char)247 + " Profile", 1);
-                } else {
-                    hotplateDisplay.println(String("183 ") + (char)247 + " Profile", 1);
-                }
+                hotplateDisplay.println(profile[byte(profile138)].name, 1);
             } else {
                 hotplateDisplay.println("Fixed Temperature", 1, true);
                 hotplateDisplay.println("Temp Set Point: " + String(targetTemp) + (char)247 + "C", 1);
@@ -119,20 +115,7 @@ void loop() {
             }
         }
     } else {
-        isProgramRunning = true;
-        hotplateDisplay.setCursor(0, 0);
-        hotplateDisplay.println("Kp: Ki: Kd:", true);
-        hotplateDisplay.println("Tc: " + String(hotplateThermistor.getTemperature()) + " " + (char)247 + "C", 1, true);
-        hotplateDisplay.println("Tt: " + String(targetTemp) + " " + (char)247 + "C", 1);
-        if(button3.isPressed()) {
-            isProgramModeSelected = false;
-            isProgramOptionConfirmed = false;
-            isProgramRunning = false;
-            isReflowCurveMode = true;
-            profile138 = true;
-            hotplateSSR.setPWM(0);
-            hotplateBuzzer.resetTone();
-        }
+        
     }
 
     /* float temperature = hotplateThermistor.getTemperature();
